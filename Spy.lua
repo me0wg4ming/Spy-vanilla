@@ -2049,97 +2049,86 @@ local function scanName(name)
 end
 
 function Spy:PlayerTargetEvent()
-    local name = GetUnitName("target", true)
-    if name and UnitIsPlayer("target") and UnitIsPVP("target") and not UnitIsFriend("player","target") 
-		and UnitFactionGroup("player") ~= UnitFactionGroup("target") and UnitCanAttack("player", "target")
-			and not SpyPerCharDB.IgnoreData[name] then
-
+	local name = GetUnitName("target", true)
+	if name
+		and UnitIsPlayer("target")	and UnitIsPVP("target")	and not UnitIsFriend("player", "target")
+			and UnitFactionGroup("player") ~= UnitFactionGroup("target")	and UnitCanAttack("player", "target")
+				and not SpyPerCharDB.IgnoreData[name]
+	then
 		local playerData = SpyPerCharDB.PlayerData[name]
-		if UnitIsEnemy("player", "target") then
-			local learnt = true
-			if playerData and playerData.isGuess == false then learnt = false end
+		local learnt = true
+		if playerData and playerData.isGuess == false then
+			learnt = false
+		end
 
-			local _, class = UnitClass("target")
-			local race, _ = UnitRace("target")
-			local level = tonumber(UnitLevel("target"))
-			local guild = GetGuildInfo("target")
-			local guess = false
-			if level == Spy.Skull then
-				if playerData and playerData.level then
-					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
-						guess = true
-						level = nil
-					elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
-						guess = true
-						level = UnitLevel("player") + 10
-					end
-				else
+		local _, class = UnitClass("target")
+		local race, _ = UnitRace("target")
+		local level = tonumber(UnitLevel("target"))
+		local guild = GetGuildInfo("target")
+		local guess = false
+
+		if level == Spy.Skull then
+			if playerData and playerData.level then
+				if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
+					guess = true
+					level = nil
+				elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
 					guess = true
 					level = UnitLevel("player") + 10
 				end
-			end
-
-			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
-			if Spy.EnabledInZone then
-				Spy:AddDetected(name, time(), learnt)
-			end
-		else
-			Spy:AddFriendsData(name)
-			if playerData then
-				Spy:RemovePlayerFromList(name)
-				Spy:RemovePlayerData(name)
+			else
+				guess = true
+				level = UnitLevel("player") + 10
 			end
 		end
-	else
-		Spy:RemovePlayerFromList(name)
-		Spy:RemovePlayerData(name)
+
+		Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
+
+		if Spy.EnabledInZone then
+			Spy:AddDetected(name, time(), learnt)
+		end
 	end
 end
 
 function Spy:PlayerMouseoverEvent()
-    local name = GetUnitName("mouseover", true)
-    if name and UnitIsPlayer("mouseover") and UnitIsPVP("mouseover") and not UnitIsFriend("player","mouseover") 
-		and UnitFactionGroup("player") ~= UnitFactionGroup("mouseover") and UnitCanAttack("player", "mouseover")
-			and not SpyPerCharDB.IgnoreData[name] then
+	local name = GetUnitName("mouseover", true)
+	if name
+		and UnitIsPlayer("mouseover")	and UnitIsPVP("mouseover")	and not UnitIsFriend("player", "mouseover")
+			and UnitFactionGroup("player") ~= UnitFactionGroup("mouseover")	and UnitCanAttack("player", "mouseover")
+				and not SpyPerCharDB.IgnoreData[name]
+	then
 		local playerData = SpyPerCharDB.PlayerData[name]
-		if UnitIsEnemy("player", "mouseover") then
-			local learnt = true
-			if playerData and playerData.isGuess == false then learnt = false end
+		local learnt = true
+		if playerData and playerData.isGuess == false then
+			learnt = false
+		end
 
-			local _, class = UnitClass("mouseover")
-			local race, _ = UnitRace("mouseover")
-			local level = tonumber(UnitLevel("mouseover"))
-			local guild = GetGuildInfo("mouseover")
-			local guess = false
-			if level == Spy.Skull then
-				if playerData and playerData.level then
-					if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
-						guess = true
-						level = nil
-					elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
-						guess = true
-						level = UnitLevel("player") + 10
-					end
-				else
+		local _, class = UnitClass("mouseover")
+		local race, _ = UnitRace("mouseover")
+		local level = tonumber(UnitLevel("mouseover"))
+		local guild = GetGuildInfo("mouseover")
+		local guess = false
+
+		if level == Spy.Skull then
+			if playerData and playerData.level then
+				if playerData.level > (UnitLevel("player") + 10) and playerData.level < Spy.MaximumPlayerLevel then
+					guess = true
+					level = nil
+				elseif UnitLevel("player") < Spy.MaximumPlayerLevel - 9 then
 					guess = true
 					level = UnitLevel("player") + 10
 				end
-			end
-
-			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
-			if Spy.EnabledInZone then
-				Spy:AddDetected(name, time(), learnt)
-			end
-		else
-			Spy:AddFriendsData(name)
-			if playerData then
-				Spy:RemovePlayerFromList(name)
-				Spy:RemovePlayerData(name)
+			else
+				guess = true
+				level = UnitLevel("player") + 10
 			end
 		end
-	else
-		Spy:RemovePlayerFromList(name)
-		Spy:RemovePlayerData(name)
+
+		Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
+
+		if Spy.EnabledInZone then
+			Spy:AddDetected(name, time(), learnt)
+		end
 	end
 end
 
