@@ -2055,7 +2055,9 @@ function Spy:PlayerTargetEvent()
 			and not SpyPerCharDB.IgnoreData[name] then
 
 		local playerData = SpyPerCharDB.PlayerData[name]
-		if UnitIsEnemy("player", "target") then
+		if UnitIsPVP("target") and not UnitIsFriend("player","target") 
+		and UnitFactionGroup("player") ~= UnitFactionGroup("target") and UnitCanAttack("player", "target")
+		then
 			local learnt = true
 			if playerData and playerData.isGuess == false then learnt = false end
 
@@ -2102,7 +2104,9 @@ function Spy:PlayerMouseoverEvent()
 		and UnitFactionGroup("player") ~= UnitFactionGroup("mouseover") and UnitCanAttack("player", "mouseover")
 			and not SpyPerCharDB.IgnoreData[name] then
 		local playerData = SpyPerCharDB.PlayerData[name]
-		if UnitIsEnemy("player", "mouseover") then
+		if UnitIsPVP("mouseover") and not UnitIsFriend("player","mouseover") 
+		and UnitFactionGroup("player") ~= UnitFactionGroup("mouseover") and UnitCanAttack("player", "mouseover")
+		then
 			local learnt = true
 			if playerData and playerData.isGuess == false then learnt = false end
 
