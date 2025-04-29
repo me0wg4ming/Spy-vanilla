@@ -98,11 +98,15 @@ function SpyData:SetUnitReason(unit, reason)  --??
 	end	
 end
 
-function SpyData:AddPlayer(unit)  -- Delete
-    if unit.isEnemy then	
-	SpyPerCharDB.PlayerData[unit.name] = unit
-	SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName][unit.name] = unit	
-	end
+function SpyData:AddPlayer(unit)
+    if unit.isEnemy then
+        local playerFaction = UnitFactionGroup("player")
+        local unitFaction = UnitFactionGroup(unit.unitID or "target")
+        if playerFaction ~= unitFaction then
+            SpyPerCharDB.PlayerData[unit.name] = unit
+            SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName][unit.name] = unit
+        end
+    end
 end
 
 function SpyData:IsPlayer(name)  --??
