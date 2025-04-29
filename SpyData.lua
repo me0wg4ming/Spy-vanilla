@@ -87,9 +87,9 @@ function SpyData:SetSavedVariablesDb(val)
 end
 
 function SpyData:GetUnitSession(unit) --++
---    if unit.isEnemy then	
+-		if unit.isEnemy then	
         return Spy_db.session.players[unit]
- --   end
+		end
 end
 
 function SpyData:SetUnitReason(unit, reason)  --??
@@ -98,10 +98,15 @@ function SpyData:SetUnitReason(unit, reason)  --??
 	end	
 end
 
-function SpyData:AddPlayer(unit)  -- Delete
-    if unit.isEnemy then	
-	SpyPerCharDB.PlayerData[unit.name] = unit
-	SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName][unit.name] = unit	
+function SpyData:AddPlayer(unit)
+	if unit and unit.name and unit.isEnemy then
+		local unitFaction = UnitFactionGroup(unit.unitID or "target")
+		local playerFaction = UnitFactionGroup("player")
+
+		if unitFaction ~= playerFaction then
+			SpyPerCharDB.PlayerData[unit.name] = unit
+			SpyDB.kosData[Spy.RealmName][Spy.FactionName][Spy.CharacterName][unit.name] = unit
+		end
 	end
 end
 

@@ -2080,7 +2080,7 @@ function Spy:PlayerTargetEvent()
 				end
 			end
 
-			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
+			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess, "target")
 			if Spy.EnabledInZone then
 				Spy:AddDetected(name, time(), learnt)
 			end
@@ -2129,7 +2129,7 @@ function Spy:PlayerMouseoverEvent()
 				end
 			end
 
-			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess)
+			Spy:UpdatePlayerData(name, class, level, race, guild, true, guess, "mouseover")
 			if Spy.EnabledInZone then
 				Spy:AddDetected(name, time(), learnt)
 			end

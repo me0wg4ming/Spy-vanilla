@@ -290,7 +290,7 @@ function Spy:AddPlayerData(name, class, level, race, guild, isEnemy, isGuess)
 	return SpyPerCharDB.PlayerData[name]
 end
 
-function Spy:UpdatePlayerData(name, class, level, race, guild, isEnemy, isGuess)
+function Spy:UpdatePlayerData(name, class, level, race, guild, isEnemy, isGuess, unitID)
 	local detected = true
 	local playerData = SpyPerCharDB.PlayerData[name]
 	if Spy:PlayerIsFriend(name) then
@@ -299,17 +299,19 @@ function Spy:UpdatePlayerData(name, class, level, race, guild, isEnemy, isGuess)
 		end
 		return
 	end
-	if not playerData then
-		playerData = Spy:AddPlayerData(name, class, level, race, guild, isEnemy, isGuess)
-	else
-		if name ~= nil then playerData.name = name end 
-		if class ~= nil then playerData.class = class end
-		if type(level) == "number" then playerData.level = level end
-		if race ~= nil then playerData.race = race end
-		if guild ~= nil then playerData.guild = guild end
-		if isEnemy ~= nil then playerData.isEnemy = isEnemy end
-		if isGuess ~= nil then playerData.isGuess = isGuess end
-	end
+if not playerData then
+	playerData = Spy:AddPlayerData(name, class, level, race, guild, isEnemy, isGuess)
+	if unitID ~= nil then playerData.unitID = unitID end  -- 🠔 HIER
+else
+	if name ~= nil then playerData.name = name end 
+	if class ~= nil then playerData.class = class end
+	if type(level) == "number" then playerData.level = level end
+	if race ~= nil then playerData.race = race end
+	if guild ~= nil then playerData.guild = guild end
+	if isEnemy ~= nil then playerData.isEnemy = isEnemy end
+	if isGuess ~= nil then playerData.isGuess = isGuess end
+	if unitID ~= nil then playerData.unitID = unitID end  -- 🠔 UND HIER
+end
 	if playerData then
 		playerData.time = time()
 		if not Spy.ActiveList[name] then
