@@ -19,3 +19,5 @@ Version 1.5 - Spy will now only trigger and show an enemy arround if they are pv
 Version 1.5 - Fixed some debug errors appearing for the user when using Aux and Spy together. 
 
 Verison 1.6 - Added several new checks to ensure the Enemy target is from the opposite faction.
+
+Version 1.7 - Fixed #showtooltip showing up in the Chat when pressing macros.
