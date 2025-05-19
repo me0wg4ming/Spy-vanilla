@@ -19,7 +19,7 @@ Spy = LibStub("AceAddon-3.0"):NewAddon("Spy", "AceConsole-3.0", "AceEvent-3.0", 
 Spy.uc = LibStub:GetLibrary("UnitCasting-1.1")
 Spy.parser = ParserLib:GetInstance('1.1')
 Spy.Version = "3.8.6"
-Spy.DatabaseVersion = "1.1"
+Spy.DatabaseVersion = "1.7"
 Spy.Signature = "[Spy]"
 Spy.MaximumPlayerLevel = 60
 Spy.MapNoteLimit = 20
@@ -41,6 +41,13 @@ Spy.AlertType = nil
 Spy.UpgradeMessageSent = false
 Spy.initTimer = ""
 Spy.Skull = -1
+
+if not SetAutoloot then
+    if DEFAULT_CHAT_FRAME then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[Spy]|r !!!Warning!!!: Addon runs without SuperWoW and may not work properly!")
+    end
+    return
+end
 
 -- Localizations for xml
 L_STATS = "Spy " .. L["Statistics"]
